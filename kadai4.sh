@@ -11,15 +11,17 @@ func(){
         fi
 }
 
-if [ $# = 2 ]
+if [ $# -ne 2 ]
 then
-        expr $1 + $2 > /dev/null 2>&1
-        if [ $? -ge 2 ]
-        then
-                echo "整数を入力してください" 1>&2
-        else
-                func $1 $2
-        fi
-else
-        echo "整数を2つ入力してください"
+        echo "整数を2つ入力してください" 1>&2
+        exit 1
 fi
+
+expr $1 + $2 > /dev/null 2>&1
+if [ $? -ge 2 ]
+then
+        echo "整数を入力してください" 1>&2
+        exit 1
+fi
+
+func $1 $2
